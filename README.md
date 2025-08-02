@@ -27,13 +27,10 @@ All sensor data is transmitted wirelessly to a central gateway and then pushed t
 
 ---
 
-## 📦 Repository Contents
+## 📦 Repository Contents - Coming soon
 
 | Folder/File         | Description                                       |
 |---------------------|---------------------------------------------------|
-| `/firmware/`        | Microcontroller code for Micromet sensor nodes    |
-| `/gateway/`         | Gateway setup scripts and configuration           |
-| `/cloud-api/`       | Python scripts and examples for data retrieval    |
 | `/docs/`            | Technical specifications and deployment guides    |
 | `/examples/`        | Sample applications and integrations              |
 
@@ -68,7 +65,7 @@ Micromet integrates directly with:
 
 ## 🛠️ Development
 
-Want to contribute? See the [CONTRIBUTING.md](CONTRIBUTING.md) file or reach out to **support@dotmote.io**.
+Want to contribute? See the [CONTRIBUTING.md](CONTRIBUTING.md) file.
 
 ---
 
