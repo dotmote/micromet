@@ -1,0 +1,67 @@
+---
+title: "Read and visualize"
+description: "Analyze data from Micromet station - V3 STM32"
+author: Aji John
+format: html
+editor: visual
+---
+
+# Goal of this notebook is to visualize the microclimate data from a station
+
+## Loading the required liraries
+
+```{r}
+library(tidyverse)
+library(lubridate)
+```
+
+# Load the file
+
+```{r}
+ff <- read_csv('./data/DATALOG.CSV')
+```
+
+# Display sample records
+
+```{r}
+ff %>% unique()
+```
+
+| Sensor ID          | Height (m)           |
+|--------------------|----------------------|
+| temp2_address - 28 | C6F8280D0000D7 - 0.0 |
+| temp3_address - 28 | B60A290D0000E5 - 0.3 |
+| temp1_address - 28 | 804C290D0000CF - 0.6 |
+| temp4_address - 28 | 9E95280D0000A5 - 0.9 |
+| temp5_address - 28 | FD25290D0000FF - 1.2 |
+
+# Visualize the data
+
+```{r}
+ff %>% tail()
+```
+
+# Convert the string to a date-time variable
+
+```{r}
+expanded_df <- ff %>% mutate(date_time = mdy_hms(datestring)) %>% mutate( date = as_date(date_time),
+                                                           yr= lubridate::year(date_time),
+                                                           mth= lubridate::month(date_time),
+                                                           day= lubridate::day(date_time), minute= 
+                                                           minute(date_time),hr = hour(date_time),
+                                                           time=format(date_time, "%H:%M:%S"))  %>%
+                                                          as.data.frame()
+```
+
+# plot all the temperatures
+
+```{r}
+expanded_df %>% filter(yr %in% c(2024) & mth %in% c(9,10)) %>% filter(temp5 > -50) %>%
+         #          filter(day ==  c(23)) %>%
+                         ggplot() +
+     geom_smooth(aes(hr, temp5, color="1.2")) +
+      geom_smooth(aes(hr, temp2, color="0.0")) +
+  geom_smooth(aes(hr, temp1, color="0.6")) +
+    facet_wrap(mth~day) +
+    labs(x="Hour", y="Temperature (°C)",color="Height (in m) ")
+```
